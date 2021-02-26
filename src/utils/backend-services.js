@@ -5,11 +5,10 @@ const fetchImages = (serchQuerry, pageNumber = 1) => {
         .then(({ data }) => data.hits);
 }
 
-const imageGallery = "https://image.tmdb.org/t/p/w500/";
 const authorizationKeyMovies = "aa839a8447a86111906cd0f508c68539";
 axios.defaults.baseURL = 'https://api.themoviedb.org/3';
 const fetchTrandingMovies = () => {
-    return axios.get(`/trending/all/day?api_key=${authorizationKeyMovies}`)
+    return axios.get(`/trending/all/day?api_key=${authorizationKeyMovies}&page=1`)
         .then(({ data }) => data.results);
 }
 
@@ -30,7 +29,7 @@ const searchCastOfMovieById = (id) => {
 }
 const searchReviewsOfMovieById = (id) => {
     return axios.get(`/movie/${id}/reviews?api_key=${authorizationKeyMovies}&page=1`)
-        .then(({ data }) => data);
+        .then(({ data }) => data.results);
 }
 
 export default { fetchImages, fetchTrandingMovies, fetchMovieSearch, searchMovieByIdFetch, searchCastOfMovieById, searchReviewsOfMovieById };
