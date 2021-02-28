@@ -43,11 +43,3 @@ img {
 /*
  * Стили компонента Searchbar
  */
-.Navlink{
-color: blue;
-font-size: 20px;
-}
-
-.active-Navlink{
-  color:red;
-}

@@ -17,6 +17,7 @@ class HomeView extends Component {
         const { trandMovies } = this.state;
         return (
             <div>
+                <h1>Trending today</h1>
                 <Gallery>
                     {trandMovies.map(movie => (
                         <ImageGalleryItem
