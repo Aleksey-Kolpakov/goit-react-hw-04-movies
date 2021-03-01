@@ -35,7 +35,7 @@ class SearchPage extends Component {
   paintImages = (searchQuerry, pageNumber) => {
     this.setState({ isLoading: true });
     api
-      .fetchMovieSearch(searchQuerry)
+      .fetchMovieSearch(searchQuerry, pageNumber)
       .then(movies => {
         this.setState(prevState => ({
           movies:
@@ -48,15 +48,15 @@ class SearchPage extends Component {
           });
       })
       .finally(() => this.setState({ isLoading: false }));
-    };
-    componentDidMount() {
-        const searchQuerry=this.props.location.search
-        if (searchQuerry) {
-            this.setState({
-                  searchQuerry:searchQuerry.substr(1)
-              })
-          }
-}
+  };
+  componentDidMount() {
+    const searchQuerry = this.props.location.search
+    if (searchQuerry) {
+      this.setState({
+        searchQuerry: searchQuerry.substr(1)
+      })
+    }
+  }
 
   componentDidUpdate(prevProps, prevState) {
     const { movies, searchQuerry, pageNumber } = this.state;
@@ -65,7 +65,7 @@ class SearchPage extends Component {
       prevState.searchQuerry !== searchQuerry
     ) {
       this.paintImages(searchQuerry, pageNumber);
-      }
+    }
   }
   render() {
     const { movies, isLoading } = this.state;
@@ -76,7 +76,7 @@ class SearchPage extends Component {
           {movies.map(movie => (
             <ImageGalleryItem
               key={movie.id}
-              src={createFullImgLink(movie.poster_path)}
+              src={movie.poster_path ? createFullImgLink(movie.poster_path) : createFullImgLink('/sWR1x6UCMCGN9xEf8RGhPS934X0.jpg')}
               title={movie.title || movie.original_name || movie.name}
               id={movie.id}
             />

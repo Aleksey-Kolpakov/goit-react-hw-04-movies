@@ -12,8 +12,8 @@ const fetchTrandingMovies = () => {
         .then(({ data }) => data.results);
 }
 
-const fetchMovieSearch = (searchQuerry) => {
-    return axios.get(`/search/movie?api_key=${authorizationKeyMovies}&query=${searchQuerry}&page=1`)
+const fetchMovieSearch = (searchQuerry, pageNumber = 1) => {
+    return axios.get(`/search/movie?api_key=${authorizationKeyMovies}&query=${searchQuerry}&page=${pageNumber}`)
         .then(({ data }) => data.results);
 }
 

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import { NavLink, Route } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import api from '../utils/backend-services';
 import { createFullImgLink } from '../utils/helpers';
-import { NavLink, Route } from 'react-router-dom';
 import Reviews from '../components/Reviews/Reviews';
 import Cast from '../components/Cast/Cast';
 import MovieCard from '../components/MovieCard/MovieCard';
@@ -23,7 +24,7 @@ class MovieDetails extends Component {
   }
   render() {
     const { movie, cast, reviews } = this.state;
-    const src = movie.poster_path && createFullImgLink(movie.poster_path);
+    const src = movie.poster_path ? createFullImgLink(movie.poster_path) : createFullImgLink('/sWR1x6UCMCGN9xEf8RGhPS934X0.jpg');
     const title = movie.title || movie.original_name || movie.name;
     return (
       <div>
@@ -48,3 +49,7 @@ class MovieDetails extends Component {
 }
 
 export default MovieDetails;
+
+MovieDetails.propTypes = {
+  
+}

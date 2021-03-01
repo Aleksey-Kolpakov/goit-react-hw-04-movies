@@ -1,0 +1,36 @@
+.MovieCard{
+    display: flex;
+    margin-bottom: 20px;
+    padding: 24px;
+}
+
+.description{
+    padding:10px;
+    text-align: left;
+}
+.button{
+        color: #fdfdfd;
+        border: none;
+        display: inline-block;
+        width: 100px;
+        height: 34px;
+        line-height: 36px;
+        text-transform: uppercase;
+        text-decoration: none;
+        letter-spacing: 0.1em;
+        text-align: center;
+        font-size: 0.8rem;
+        margin: 10px;
+        font-weight: 700;
+        border-radius: 4px;
+        -webkit-transition: background-color 0.3s linear, color 0.3s linear;
+        transition: background-color 0.3s linear, color 0.3s linear;
+        background: rgba(15, 89, 224, 0.9);
+
+
+}
+.button:hover,.button:focus {
+    color: blue;
+    background: #fdfdfd;
+    outline: none;
+  }

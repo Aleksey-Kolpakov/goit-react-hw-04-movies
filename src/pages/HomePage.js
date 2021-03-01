@@ -16,7 +16,7 @@ class HomeView extends Component {
     render() {
         const { trandMovies } = this.state;
         return (
-            <div>
+            <div style={{ textAlign: "center" }}>
                 <h1>Trending today</h1>
                 <Gallery>
                     {trandMovies.map(movie => (
