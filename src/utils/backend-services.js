@@ -1,10 +1,4 @@
 import axios from 'axios';
-const authorizationKey = "19945506-a6680bfa60c04d980657bbe54";
-const fetchImages = (serchQuerry, pageNumber = 1) => {
-    return axios.get(`https://pixabay.com/api/?key=${authorizationKey}&q=${serchQuerry}&per_page=12&page=${pageNumber}`)
-        .then(({ data }) => data.hits)
-        .catch(error => console.log(error));
-}
 
 const authorizationKeyMovies = "aa839a8447a86111906cd0f508c68539";
 axios.defaults.baseURL = 'https://api.themoviedb.org/3';
@@ -38,4 +32,4 @@ const searchReviewsOfMovieById = (id) => {
         .catch(error => console.log(error));
 }
 
-export default { fetchImages, fetchTrandingMovies, fetchMovieSearch, searchMovieByIdFetch, searchCastOfMovieById, searchReviewsOfMovieById };
+export default { fetchTrandingMovies, fetchMovieSearch, searchMovieByIdFetch, searchCastOfMovieById, searchReviewsOfMovieById };
