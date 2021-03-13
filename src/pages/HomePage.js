@@ -1,20 +1,15 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux'
 import Gallery from '../components/ImageGallery/Gallery';
-import api from '../utils/backend-services';
 import ImageGalleryItem from '../components/ImageGalleryItem/ImageGalleryItem';
 import { createFullImgLink } from '../utils/helpers';
+import moviesOperations from '../redux/movies/movies-operations'
 
-class HomeView extends Component {
-    state = {
-        trandMovies: []
-    }
-    componentDidMount() {
-        api.fetchTrandingMovies().then(movies => this.setState({
-            trandMovies: [...movies],
-        }))
-    }
-    render() {
-        const { trandMovies } = this.state;
+const HomeView =({fetchTrandingMovies,trandMovies})=> {
+    useEffect(() => {
+    fetchTrandingMovies()
+},[fetchTrandingMovies])
+
         return (
             <div style={{ textAlign: "center" }}>
                 <h1>Trending today</h1>
@@ -28,7 +23,18 @@ class HomeView extends Component {
                 </Gallery>
             </div>
         );
-    }
+
+}
+const mapStateToProps = state => {
+
+    return ({
+        trandMovies: state.movies,
+    })
 }
 
-export default HomeView;
+const mapDispatchToProps = dispatch => ({
+    fetchTrandingMovies:()=>dispatch(moviesOperations.fetchTrendMovies())
+})
+export default connect(mapStateToProps, mapDispatchToProps)(HomeView);
+
+

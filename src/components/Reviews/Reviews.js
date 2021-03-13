@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { useEffect }  from 'react';
 import PropTypes from 'prop-types';
-
-const Reviews = ({ reviews }) => {
+import { connect } from 'react-redux';
+import moviesOperations from '../../redux/movies/movies-operations';
+const Reviews = ({ reviews, fetchReviews ,match}) => {
+  
+    useEffect(() => {
+          const id = match.params.movieId;
+        fetchReviews(id)
+    },[fetchReviews])
     return (
         <>
             <ul>
@@ -13,12 +19,20 @@ const Reviews = ({ reviews }) => {
         </>
     );
 };
+const mapStateToProps = state => {
+  return {
+    cast: state.reviews,
+  };
+};
 
-export default Reviews;
+const mapDispatchToProps = dispatch => ({
+  fetchReviews: id => dispatch(moviesOperations.fetchReviews(id)),
+});
+export default connect(mapStateToProps,mapDispatchToProps)(Reviews);
 
 Reviews.propTypes = {
     reviews: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.number,
+        id: PropTypes.string,
         author: PropTypes.string,
         content: PropTypes.string
     }))

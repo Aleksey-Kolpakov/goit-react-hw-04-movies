@@ -4,7 +4,7 @@ const middleware = getDefaultMiddleware();
 
 const rootReducer = combineReducers({
     movies: moviesReducer,
-    movieDetailsReducer: movieDetailsReducer,
+    movieDetails: movieDetailsReducer,
     cast: castReducer,
     reviews: reviewsReducer,
     error: errorReducer,

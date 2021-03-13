@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { NavLink, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import api from '../utils/backend-services';
 import { createFullImgLink } from '../utils/helpers';
@@ -8,40 +8,27 @@ import Cast from '../components/Cast/Cast';
 import MovieCard from '../components/MovieCard/MovieCard';
 class MovieDetails extends Component {
   state = {
-    movie: {},
-    cast: [],
     reviews: [],
   };
   componentDidMount() {
     const id = this.props.match.params.movieId;
-    api.searchMovieByIdFetch(id).then(data => this.setState({ movie: data }));
-    api
-      .searchCastOfMovieById(id)
-      .then(data => this.setState({ cast: [...data] }));
     api
       .searchReviewsOfMovieById(id)
       .then(data => this.setState({ reviews: [...data] }));
   }
   render() {
-    const { movie, cast, reviews } = this.state;
-    const src = movie.poster_path ? createFullImgLink(movie.poster_path) : createFullImgLink('/sWR1x6UCMCGN9xEf8RGhPS934X0.jpg');
-    const title = movie.title || movie.original_name || movie.name;
+    const { cast, reviews } = this.state;
+
     return (
       <div>
-        <MovieCard
-          title={movie.title}
-          vote_average={movie.vote_average}
-          overview={movie.overview}
-          genres={movie.genres}
-          src={src}
-        />
+        <MovieCard />
         <Route
           path={`${this.props.match.path}/reviews`}
           render={props => <Reviews {...props} reviews={reviews} />}
         />
         <Route
           path={`${this.props.match.path}/cast`}
-          render={props => <Cast {...props} cast={cast} />}
+          render={props => <Cast {...props}/>}
         />
       </div>
     );
@@ -50,6 +37,4 @@ class MovieDetails extends Component {
 
 export default MovieDetails;
 
-MovieDetails.propTypes = {
-  
-}
+MovieDetails.propTypes = {};
