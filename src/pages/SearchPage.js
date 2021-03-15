@@ -44,7 +44,10 @@ const SearchPage = ({ movies, isLoading, fetchMovies, cleanMovies }) => {
     cleanMovies();
   }, [])
   useEffect(() => {
-    paintImages(searchQuerry, pageNumber);
+    if (searchQuerry) {
+      paintImages(searchQuerry, pageNumber);
+    }
+
   }, [searchQuerry, pageNumber])
 
   useEffect(() => {
