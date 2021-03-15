@@ -13,7 +13,7 @@ const fetchMovies = (search, pageNumber) => dispatch => {
   dispatch(actions.fetchMoviesRequest());
   api
     .fetchMovieSearch(search, pageNumber)
-    .then(movies => dispatch(actions.fetchMoviesSucces(movies)))
+    .then(movies => dispatch(pageNumber > 1 ? actions.fetchMoviesSucces(movies) : actions.fetchTrendMoviesSucces(movies)))
     .catch(error => actions.fetchMoviesError(error));
 };
 const fetchMovieDetails = id => dispatch => {

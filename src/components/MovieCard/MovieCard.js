@@ -1,20 +1,20 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { NavLink, withRouter } from 'react-router-dom';
+import { NavLink, withRouter, useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import routes from '../../routes';
 import styles from './MovieCard.module.css';
 import moviesOperations from '../../redux/movies/movies-operations';
-import {createFullImgLink} from '../../utils/helpers'
+import { createFullImgLink } from '../../utils/helpers'
 
 const MovieCard = ({
   movieDetails,
   fetchMovieDetails,
-  match,
-  location,
-  history,
 }) => {
-  const { poster_path, title, vote_average, overview, genres,name,original_name } = movieDetails;
+  const history = useHistory();
+  const location = useLocation();
+  const match = useRouteMatch();
+  const { poster_path, title, vote_average, overview, genres, name, original_name } = movieDetails;
   const src = poster_path
     ? createFullImgLink(poster_path)
     : createFullImgLink('/sWR1x6UCMCGN9xEf8RGhPS934X0.jpg');
@@ -51,11 +51,11 @@ const MovieCard = ({
                 to={
                   location.state && location.state.from
                     ? {
-                        pathname: `${match.url}/cast`,
-                        state: {
-                          from: location.state.from,
-                        },
-                      }
+                      pathname: `${match.url}/cast`,
+                      state: {
+                        from: location.state.from,
+                      },
+                    }
                     : `${match.url}/cast`
                 }
               >
@@ -67,11 +67,11 @@ const MovieCard = ({
                 to={
                   location.state && location.state.from
                     ? {
-                        pathname: `${match.url}/reviews`,
-                        state: {
-                          from: location.state.from,
-                        },
-                      }
+                      pathname: `${match.url}/reviews`,
+                      state: {
+                        from: location.state.from,
+                      },
+                    }
                     : `${match.url}/reviews`
                 }
               >

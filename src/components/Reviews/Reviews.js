@@ -21,7 +21,7 @@ const Reviews = ({ reviews, fetchReviews ,match}) => {
 };
 const mapStateToProps = state => {
   return {
-    cast: state.reviews,
+    reviews: state.reviews,
   };
 };
 
