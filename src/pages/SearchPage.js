@@ -24,7 +24,7 @@ class SearchPage extends Component {
     });
     this.props.history.push({
       pathname: this.props.location.pathname,
-      search: `${submitValue}`,
+      search: `search=${submitValue}`,
     });
   };
   loadMore = () => {
@@ -52,8 +52,9 @@ class SearchPage extends Component {
   componentDidMount() {
     const searchQuerry = this.props.location.search
     if (searchQuerry) {
+      const querry = new URLSearchParams(searchQuerry).get('search');
       this.setState({
-        searchQuerry: searchQuerry.substr(1)
+        searchQuerry: querry
       })
     }
   }
