@@ -29,7 +29,7 @@ const SearchPage = () => {
     setPageNumber(1);
     history.push({
       pathname: location.pathname,
-      search: `${submitValue}`,
+      search: `search=${submitValue}`,
     });
   }
 
@@ -42,7 +42,7 @@ const SearchPage = () => {
   };
   useEffect(() => {
     if (location.search) {
-      const querry = location.search.substr(1);
+      const querry = new URLSearchParams(location.search).get('search');
       setSearchQuerry(querry);
       return;
     }
