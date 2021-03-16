@@ -17,18 +17,20 @@ const {
   fetchTrendMoviesError,
   fetchTrendMoviesRequest,
   cleanMovies,
+  cleanMovieDetails,
 } = actions;
 
 export const moviesReducer = createReducer([], {
   [fetchMoviesSucces]: (state, { payload }) => [...state, ...payload],
   [fetchTrendMoviesSucces]: (state, { payload }) => [...payload],
-  [cleanMovies]:()=>[],
+  [cleanMovies]: () => [],
 });
 
 export const movieDetailsReducer = createReducer(
   {},
   {
     [fetchMovieDetailSucces]: (state, { payload }) => payload,
+    [cleanMovieDetails]: () => [],
   },
 );
 

@@ -1,16 +1,19 @@
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector, useDispatch } from 'react-redux';
 import { NavLink, withRouter, useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import routes from '../../routes';
 import styles from './MovieCard.module.css';
 import moviesOperations from '../../redux/movies/movies-operations';
+import moviesActions from '../../redux/movies/movies-actions'
 import { createFullImgLink } from '../../utils/helpers'
+import { getMovieDetails } from '../../redux/movies/movies-selectors'
 
-const MovieCard = ({
-  movieDetails,
-  fetchMovieDetails,
-}) => {
+const MovieCard = () => {
+  const movieDetails = useSelector(getMovieDetails);
+  const dispatch = useDispatch();
+  const fetchMovieDetails = id => dispatch(moviesOperations.fetchMovieDetails(id));
+  const cleanMovieDetails = () => dispatch(moviesActions.cleanMovieDetails());
   const history = useHistory();
   const location = useLocation();
   const match = useRouteMatch();
@@ -21,7 +24,8 @@ const MovieCard = ({
   const presentTitle = title || original_name || name;
   useEffect(() => {
     fetchMovieDetails(match.params.movieId);
-  }, [fetchMovieDetails]);
+    return cleanMovieDetails();
+  }, []);
 
   const handleGoBack = () => {
     if (location.state && location.state.from) {
@@ -84,24 +88,14 @@ const MovieCard = ({
     </>
   );
 };
-const mapStateToProps = state => {
-  return {
-    movieDetails: state.movieDetails,
-  };
-};
 
-const mapDispatchToProps = dispatch => ({
-  fetchMovieDetails: id => dispatch(moviesOperations.fetchMovieDetails(id)),
-});
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(MovieCard),
-);
+export default withRouter(MovieCard);
 
-MovieCard.propTypes = {
-  poster_path: PropTypes.string,
-  title: PropTypes.string,
-  vote_average: PropTypes.number,
-  overview: PropTypes.string,
-  genres: PropTypes.arrayOf(PropTypes.shape()),
-};
+// MovieCard.propTypes = {
+//   poster_path: PropTypes.string,
+//   title: PropTypes.string,
+//   vote_average: PropTypes.number,
+//   overview: PropTypes.string,
+//   genres: PropTypes.arrayOf(PropTypes.shape()),
+// };

@@ -1,13 +1,16 @@
-import React, { useEffect }  from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { connect, useSelector, useDispatch } from 'react-redux';
 import moviesOperations from '../../redux/movies/movies-operations';
-const Reviews = ({ reviews, fetchReviews ,match}) => {
-  
+import { getReviews } from '../../redux/movies/movies-selectors'
+const Reviews = ({ match }) => {
+    const reviews = useSelector(getReviews);
+    const dispatch = useDispatch();
+    const fetchReviews = id => dispatch(moviesOperations.fetchReviews(id))
     useEffect(() => {
-          const id = match.params.movieId;
+        const id = match.params.movieId;
         fetchReviews(id)
-    },[fetchReviews])
+    }, [])
     return (
         <>
             <ul>
@@ -19,21 +22,9 @@ const Reviews = ({ reviews, fetchReviews ,match}) => {
         </>
     );
 };
-const mapStateToProps = state => {
-  return {
-    reviews: state.reviews,
-  };
-};
 
-const mapDispatchToProps = dispatch => ({
-  fetchReviews: id => dispatch(moviesOperations.fetchReviews(id)),
-});
-export default connect(mapStateToProps,mapDispatchToProps)(Reviews);
+export default Reviews;
 
 Reviews.propTypes = {
-    reviews: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.string,
-        author: PropTypes.string,
-        content: PropTypes.string
-    }))
+    match: PropTypes.shape()
 }

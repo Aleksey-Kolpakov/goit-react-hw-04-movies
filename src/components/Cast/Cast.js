@@ -1,11 +1,17 @@
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector, useDispatch } from 'react-redux';
 import { createFullImgLink } from '../../utils/helpers';
 import Gallery from '../ImageGallery/Gallery';
 import PropTypes from 'prop-types';
 import moviesOperations from '../../redux/movies/movies-operations';
-const Cast = ({ cast, fetchCast, match }) => {
+import { getCast } from '../../redux/movies/movies-selectors'
+const Cast = ({ match }) => {
   const id = match.params.movieId;
+  const cast = useSelector(getCast);
+  const dispatch = useDispatch();
+  const fetchCast = () => {
+    dispatch(moviesOperations.fetchCast(id));
+  };
   useEffect(() => {
     fetchCast(id);
   }, [fetchCast]);
@@ -37,24 +43,9 @@ const Cast = ({ cast, fetchCast, match }) => {
     </>
   );
 };
-const mapStateToProps = state => {
-  return {
-    cast: state.cast,
-  };
-};
 
-const mapDispatchToProps = dispatch => ({
-  fetchCast: id => dispatch(moviesOperations.fetchCast(id)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Cast);
+export default Cast;
 Cast.propTypes = {
-  cast: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string,
-      gender: PropTypes.number,
-      profile_path: PropTypes.string,
-      character: PropTypes.string,
-    }),
-  ).isRequired,
+
+  match: PropTypes.shape().isRequired,
 };

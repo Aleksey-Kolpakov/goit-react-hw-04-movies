@@ -1,5 +1,5 @@
 import React, { Component, useState, useEffect } from 'react';
-import { connect } from 'react-redux'
+import { connect, useSelector, useDispatch } from 'react-redux'
 import { useHistory, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import Loader from 'react-loader-spinner';
@@ -12,14 +12,18 @@ import ImageGalleryItem from '../components/ImageGalleryItem/ImageGalleryItem';
 import Button from '../components/Button/Button';
 import moviesOperations from '../redux/movies/movies-operations';
 import moviesActions from '../redux/movies/movies-actions';
+import { getLoading, getMovies } from '../redux/movies/movies-selectors'
 
-
-const SearchPage = ({ movies, isLoading, fetchMovies, cleanMovies }) => {
+const SearchPage = () => {
   const [searchQuerry, setSearchQuerry] = useState('');
   const [pageNumber, setPageNumber] = useState(1);
   const history = useHistory();
-  const location = useLocation();
-
+  const location = useLocation(getLoading);
+  const dispatch = useDispatch();
+  const fetchMovies = (search, pageNumber) => dispatch(moviesOperations.fetchMovies(search, pageNumber))
+  const cleanMovies = () => dispatch(moviesActions.cleanMovies());
+  const movies = useSelector(getMovies);
+  const isLoading = useSelector(getLoading);
   const searchImages = submitValue => {
     setSearchQuerry(submitValue);
     setPageNumber(1);
@@ -39,7 +43,8 @@ const SearchPage = ({ movies, isLoading, fetchMovies, cleanMovies }) => {
   useEffect(() => {
     if (location.search) {
       const querry = location.search.substr(1);
-      return setSearchQuerry(querry);
+      setSearchQuerry(querry);
+      return;
     }
     cleanMovies();
   }, [])
@@ -79,17 +84,17 @@ const SearchPage = ({ movies, isLoading, fetchMovies, cleanMovies }) => {
     </>
   );
 };
-const mapStateToProps = state => {
-  return {
-    movies: state.movies,
-    isLoading: state.loading,
-  };
-};
+// const mapStateToProps = state => {
+//   return {
+//     movies: getMovies(state),
+//     isLoading: getLoading(state),
+//   };
+// };
 
-const mapDispatchToProps = dispatch => ({
-  fetchMovies: (search, pageNumber) => dispatch(moviesOperations.fetchMovies(search, pageNumber)),
-  cleanMovies: () => dispatch(moviesActions.cleanMovies()),
-});
+// const mapDispatchToProps = dispatch => ({
+//   fetchMovies: (search, pageNumber) => dispatch(moviesOperations.fetchMovies(search, pageNumber)),
+//   cleanMovies: () => dispatch(moviesActions.cleanMovies()),
+// });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchPage);
+export default SearchPage;
 

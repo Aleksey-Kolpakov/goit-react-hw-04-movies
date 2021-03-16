@@ -26,5 +26,6 @@ const MovieDetails = ({ match }) => {
 
 export default MovieDetails;
 
-
-MovieDetails.propTypes = {};
+MovieDetails.propTypes = {
+  match: PropTypes.shape().isRequired
+};

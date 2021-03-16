@@ -20,7 +20,8 @@ const fetchReviewsSucces = createAction('movies/fetchCastSucces');
 const fetchReviewsError = createAction('movies/fetchCastError');
 const fetchReviewsRequest = createAction('movies/fetchCastRequest');
 
-const cleanMovies=createAction('movies/cleanMovies')
+const cleanMovies = createAction('movies/cleanMovies');
+const cleanMovieDetails = createAction('movies/cleanMovieDetails');
 export default {
     fetchMoviesSucces,
     fetchMoviesError,
@@ -38,4 +39,5 @@ export default {
     fetchTrendMoviesError,
     fetchTrendMoviesRequest,
     cleanMovies,
+    cleanMovieDetails,
 }
